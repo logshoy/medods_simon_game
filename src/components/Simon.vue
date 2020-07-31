@@ -2,7 +2,7 @@
   <div class="simon">
     <div>
       <h1>Simon</h1>
-      <div id="appColorButtons" class="simon__appColorButtons">
+      <div class="simon__appColorButtons">
         <button 
           class="simon__colorButton simon__colorButton--blue"
           id="blue"
@@ -37,16 +37,16 @@
       <div class="simon__gameMode">
         <h3>Игровые опции</h3>
         <div>
-          <input type="radio" value="1500" v-model="gameMode" :disabled="randomChain.length > 0" />
-          <label>Легкий</label>
+          <input id="easy" type="radio" value="1500" v-model="gameMode" :disabled="randomChain.length > 0" />
+          <label for="easy">Легкий</label>
         </div>
         <div>
-          <input type="radio" value="1000" v-model="gameMode" :disabled="randomChain.length > 0"/>
-          <label>Средний</label>
+          <input id="middle" type="radio" value="1000" v-model="gameMode" :disabled="randomChain.length > 0"/>
+          <label for="middle">Средний</label>
         </div>
         <div>
-          <input type="radio" value="500" v-model="gameMode" :disabled="randomChain.length > 0"/>
-          <label>Сложный</label>
+          <input id="hard" type="radio" value="400" v-model="gameMode" :disabled="randomChain.length > 0"/>
+          <label id="">Сложный</label>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
   methods: {
     handleColorButton(event) {
       if (this.playerTurn) {
-        this.audioSignal(event.target.id)
+        this.audioSound(event.target.id)
         this.opacityColorButton(event.target.id)
         this.playerChain.push(event.target.id)
         if (this.compareChain(this.step)) {
@@ -123,17 +123,17 @@ export default {
       this.count += 1
     },
     playRandomChain(chain) {
-        for(let i=0; i<chain.length; i++){
+        chain.forEach((element, index) => {
           setTimeout(()=>{
-            this.audioSignal(chain[i])
-            this.opacityColorButton(chain[i])
-          }, i*this.gameMode)
-        }
+            this.audioSound(element)
+            this.opacityColorButton(element)
+          }, index*this.gameMode)
+        })
         setTimeout(()=>{
           this.playerTurn = true
-        }, chain.length*this.gameMode)        
+        }, (chain.length-1)*this.gameMode)        
     },
-    audioSignal(color) {
+    audioSound(color) {
       const redAudio = new Audio('https://raw.githubusercontent.com/kellyk/javascript-simon/master/sounds/1.mp3');
       const greenAudio = new Audio('https://raw.githubusercontent.com/kellyk/javascript-simon/master/sounds/2.mp3');
       const blueAudio = new Audio('https://raw.githubusercontent.com/kellyk/javascript-simon/master/sounds/3.mp3');
@@ -250,6 +250,12 @@ body {
   .simon {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media(min-width: 768px) {
+  .simon__action {
+    margin-left: 50px;
   }
 }
 
