@@ -46,7 +46,7 @@
         </div>
         <div>
           <input id="hard" type="radio" value="400" v-model="gameMode" :disabled="randomChain.length > 0"/>
-          <label id="">Сложный</label>
+          <label for="hard">Сложный</label>
         </div>
       </div>
     </div>
