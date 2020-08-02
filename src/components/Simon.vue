@@ -72,7 +72,7 @@ export default {
         this.playerChain.push(event.target.id)
         if (this.compareChain(this.step)) {
           this.step += 1
-          if (this.step>=this.randomChain.length) {
+          if (this.step==this.randomChain.length) {
             this.playerTurn = false
             setTimeout(()=>{
               this.addRandomStep()
@@ -81,8 +81,7 @@ export default {
               this.step = 0
             },1000)
           } 
-        } 
-        else {
+        } else {
           this.playerTurn = false
           this.lose = this.count
           this.randomChain = []
@@ -95,6 +94,8 @@ export default {
       this.count = 0
       this.step = 0
       this.lose = false
+      this.randomChain = []
+      this.playerChain = []
       this.addRandomStep()
       this.playRandomChain(this.randomChain)
     },
@@ -158,7 +159,7 @@ export default {
       document.getElementById(color).classList.add("active")
       setTimeout(()=>{
         document.getElementById(color).classList.remove("active")
-      },300)
+      }, 300)
     }
   }
 }
@@ -234,7 +235,6 @@ body {
 .simon__gameMode {
   display: flex;
   flex-direction: column ;
-  justify-content: center;
 }
 
 .simon__gameMode > div {
